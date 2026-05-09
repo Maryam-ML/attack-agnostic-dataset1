@@ -32,9 +32,11 @@ FAKEAVCELEB_KFOLD_SPLIT = {
 
 class FakeAVCelebDataset(SimpleAudioFakeDataset):
 
-    audio_folder = "FakeAVCeleb-audio"
+    audio_folder = "/kaggle/input/datasets/rabiaanum/fakeavceleb"
     audio_extension = ".mp3"
-    metadata_file = Path(audio_folder) / "meta_data.csv"
+    metadata_file = Path(audio_folder) / "meta_data_selected_methods.csv
+
+"
     subsets = ("train", "dev", "eval")
 
     def __init__(self, path, fold_num=0, fold_subset="train", transform=None):
