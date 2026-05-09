@@ -265,9 +265,6 @@ def _build_preprocessing(
         raise TypeError("Unsupported type for directory_or_audiodataset!")
 
 
-mfcc = functools.partial(_build_preprocessing,
-                         transform=torchaudio.transforms.MFCC)
-lfcc = functools.partial(_build_preprocessing, transform=LFCC)
 
 
 def double_delta(dataset: torch.utils.data.Dataset, delta_kwargs: dict = {}) -> TransformDataset:
@@ -339,19 +336,3 @@ def load_directory_split_train_test(
     return dataset_train, dataset_test
 
 
-def apply_feature_and_double_delta(
-        datasets: List[torch.utils.data.Dataset],
-        feature_fn: Callable,
-        feature_kwargs: dict,
-        use_double_delta: bool = True
-):
-
-    datasets_list = []
-    for ds in datasets:
-        ds = feature_fn(directory_or_audiodataset=ds, transformkwargs=feature_kwargs)
-        if use_double_delta:
-            ds = double_delta(ds)
-
-        datasets_list.append(ds)
-
-    return datasets_list
