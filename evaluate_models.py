@@ -20,11 +20,11 @@ from dfadetect import cnn_features
 from dfadetect.agnostic_datasets.attack_agnostic_dataset import \
     AttackAgnosticDataset
 from dfadetect.cnn_features import CNNFeaturesSetting
-from dfadetect.datasets import (TransformDataset,
-                                apply_feature_and_double_delta, lfcc, mfcc)
+#from dfadetect.datasets import (TransformDataset,
+                                #apply_feature_and_double_delta, lfcc, mfcc)
 from dfadetect.models import models
-from dfadetect.models.gaussian_mixture_model import (GMMBase, classify_dataset,
-                                                     load_model)
+#from dfadetect.models.gaussian_mixture_model import (GMMBase, classify_dataset,
+                                                     #load_model)
 from dfadetect.trainer import NNDataSetting
 from dfadetect.utils import set_seed
 from experiment_config import feature_kwargs
@@ -163,8 +163,8 @@ def evaluate_nn(
 
         logging_prefix = f"fold_{fold}"
         data_val = AttackAgnosticDataset(
-            asvspoof_path=datasets_paths[0],
-            wavefake_path=datasets_paths[1],
+            #asvspoof_path=datasets_paths[0],
+            #wavefake_path=datasets_paths[1],
             fakeavceleb_path=datasets_paths[2],
             fold_num=fold,
             fold_subset="val",
@@ -260,8 +260,8 @@ def evaluate_gmm(
     for subtype in ["val", "test", "train"]:
         for fold in [0, 1, 2]:
             real_dataset_test = AttackAgnosticDataset(
-                asvspoof_path=datasets_paths[0],
-                wavefake_path=datasets_paths[1],
+                #asvspoof_path=datasets_paths[0],
+                #wavefake_path=datasets_paths[1],
                 fakeavceleb_path=datasets_paths[2],
                 fold_num=fold,
                 fold_subset=subtype,
@@ -273,8 +273,8 @@ def evaluate_gmm(
             real_dataset_test.get_bonafide_only()
 
             fake_dataset_test = AttackAgnosticDataset(
-                asvspoof_path=datasets_paths[0],
-                wavefake_path=datasets_paths[1],
+                #asvspoof_path=datasets_paths[0],
+                #wavefake_path=datasets_paths[1],
                 fakeavceleb_path=datasets_paths[2],
                 fold_num=fold,
                 fold_subset=subtype,
