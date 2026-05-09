@@ -76,51 +76,6 @@ def calculate_eer(y, y_score) -> Tuple[float, float, np.ndarray, np.ndarray]:
     return thresh, eer, fpr, tpr
 
 
-def calculate_eer_for_models(
-    real_model: GMMBase,
-    fake_model: GMMBase,
-    real_dataset_test: TransformDataset,
-    fake_dataset_test: TransformDataset,
-    training_dataset_name: str,
-    fake_dataset_name: str,
-    plot_dir_path: str,
-    device: str,
-) -> Tuple[float, float, np.ndarray, np.ndarray]:
-    real_scores = classify_dataset(
-        real_model,
-        fake_model,
-        real_dataset_test,
-        device
-    ).numpy()
-
-    fake_scores = classify_dataset(
-        real_model,
-        fake_model,
-        fake_dataset_test,
-        device
-    ).numpy()
-
-    # JSUT fake samples are fewer available
-    length = min(len(real_scores),  len(fake_scores))
-    real_scores = real_scores[:length]
-    fake_scores = fake_scores[:length]
-
-    labels = np.concatenate(
-        (
-            np.zeros(real_scores.shape, dtype=np.int32),
-            np.ones(fake_scores.shape, dtype=np.int32)
-        )
-    )
-
-    thresh, eer, fpr, tpr = calculate_eer(
-        y=np.array(labels, dtype=np.int32),
-        y_score=np.concatenate((real_scores, fake_scores)),
-    )
-
-    fig_path = f"{plot_dir_path}/{training_dataset_name.replace('.', '_').replace('/', '_')}_{fake_dataset_name.replace('.', '_').replace('/', '_')}"
-    plot_roc(fpr, tpr, training_dataset_name, fake_dataset_name, fig_path)
-
-    return eer, thresh, fpr, tpr
 
 
 def evaluate_nn(
